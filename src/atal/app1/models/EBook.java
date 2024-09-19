@@ -4,12 +4,23 @@ public class EBook {
 	private String title;
 	private String author;
 	private Integer publishDate;
+	private Integer id;
 	
-	public EBook(String title, String author, Integer publishDate) {
+	public EBook(Integer id, String title, String author, Integer publishDate) {
 		super();
+		this.id = id;
 		this.title = title;
 		this.author = author;
 		this.publishDate = publishDate;
+	}
+	
+	public Integer getId() {
+		return id;
+	}
+
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 

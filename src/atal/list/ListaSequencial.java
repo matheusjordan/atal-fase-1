@@ -1,16 +1,19 @@
 package atal.list;
 
-public class ListaSequencial<T> {
+import atal.app1.models.EBook;
+import atal.app1.models.SortBy;
+
+public class ListaSequencial {
 	private static final int INITIAL_ALLOCATION = 3;
 	private static final int INCREASE_FACTOR = 2;
-	private T[] list;
+	private EBook[] list;
 	private int inserted;
 	
 	public ListaSequencial() {
 		list = createArray(INITIAL_ALLOCATION);
 	}
 	
-	public void add(T item) {
+	public void add(EBook item) {
 		if (list.length == inserted) {
 			resizeArray();
 		}
@@ -19,7 +22,7 @@ public class ListaSequencial<T> {
 		inserted++;
 	}
 	
-	public T get(int index) {
+	public EBook get(int index) {
 		validateIndex(index);
 
 		return list[index];
@@ -55,6 +58,24 @@ public class ListaSequencial<T> {
 		return inserted == 0;
 	}
 	
+	public void sort() {
+		int initialIndex = (int) Math.floor(inserted / 2);
+		EBook pivot = list[initialIndex];
+		int pivotValue = pivot.getPublishDate();
+		
+		
+		
+		
+	}
+	
+	public void sort(SortBy property) {
+		switch (property) {
+			case SortBy.ID:
+			break;
+		}
+		sort();	
+	}
+	
 	private void moveArrayItems(int initialIndex) {
 		int nextIndex = initialIndex + 1;
 		
@@ -69,7 +90,7 @@ public class ListaSequencial<T> {
 	
 	
 	private void resizeArray() {
-		T[] newList = createArray(list.length * INCREASE_FACTOR);
+		EBook[] newList = createArray(list.length * INCREASE_FACTOR);
 		
 		for (int i = 0; i < list.length; i++) {
 			newList[i] = list[i];
@@ -84,8 +105,7 @@ public class ListaSequencial<T> {
 		}
 	}
 	
-	@SuppressWarnings("unchecked")
-	private T[] createArray(int size) {
-		return (T[]) new Object[size];
+	private EBook[] createArray(int size) {
+		return new EBook[size];
 	}
 }

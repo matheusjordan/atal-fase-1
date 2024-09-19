@@ -6,7 +6,7 @@ import atal.app1.models.EBook;
 import atal.list.ListaSequencial;
 
 public class OptionsMenu {
-	private static ListaSequencial<String> list = new ListaSequencial<>();
+	private static ListaSequencial list = new ListaSequencial();
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -62,7 +62,9 @@ public class OptionsMenu {
             elemento = scanner.nextLine();
             
             if (!elemento.equals("00")) {
-                list.add(elemento);
+            	Integer bookID = Integer.valueOf(elemento);
+            	EBook livro = new EBook(bookID, "", "", bookID);
+                list.add(livro);
             }
         } while (!elemento.equals("00"));
         
