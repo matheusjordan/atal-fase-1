@@ -59,21 +59,52 @@ public class ListaSequencial {
 	}
 	
 	public void sort() {
-		int initialIndex = (int) Math.floor(inserted / 2);
-		EBook pivot = list[initialIndex];
-		int pivotValue = pivot.getPublishDate();
-		
-		
-		
-		
+		quickSort();
 	}
 	
-	public void sort(SortBy property) {
-		switch (property) {
-			case SortBy.ID:
-			break;
+	private void quickSort() {
+		int leftIndex = 0;
+		int rigthIndex = inserted - 1;
+
+		if (inserted > 1) {
+			quickSortPartioning(list, leftIndex, rigthIndex);
+		}	
+	}
+	
+	private void quickSortPartioning(EBook[] items, int leftIndex, int rigthIndex) {
+		if (leftIndex < rigthIndex) {
+			return;
 		}
-		sort();	
+		
+		int i = leftIndex - 1,
+			j = rigthIndex + 1,
+			pivotIndex = 0;
+		
+		Integer nextPivotIndex = null;
+		pivotIndex = (int) (leftIndex + rigthIndex) / 2;
+		EBook pivot = list[pivotIndex];
+		
+		while (nextPivotIndex == null) {
+			do {
+				i++;
+			} while(items[i].getPublishDate() < pivot.getPublishDate());
+			
+			do {
+				j--;
+			} while(items[j].getPublishDate() > pivot.getPublishDate());
+			
+			if (i >= j) {
+				nextPivotIndex = j;
+			} else {
+				EBook aux = list[i];
+				list[i] = list[j];
+				list[j] = aux;	
+			}
+			
+		}
+		
+		quickSortPartioning(list, leftIndex, pivotIndex);
+		quickSortPartioning(list, pivotIndex + 1, rigthIndex);
 	}
 	
 	private void moveArrayItems(int initialIndex) {

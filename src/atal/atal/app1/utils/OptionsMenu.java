@@ -37,7 +37,7 @@ public class OptionsMenu {
                     removerElemento(scanner);
                     break;
                 case 4:
-//                    ordenarLista();
+                    ordenarLista();
                     break;
                 case 5:
                     exibirLista();
@@ -87,7 +87,7 @@ public class OptionsMenu {
         } else {
             System.out.println("\nElementos da lista:");
             for (int i = 0; i < list.size(); i++) {
-                System.out.println(i + ": " + list.get(i));
+                System.out.println(i + ": " + list.get(i).getPublishDate());
             }
         }
     }
@@ -101,9 +101,9 @@ public class OptionsMenu {
             System.out.println("Índice inválido.");
         }
     }
-//
-//    private static void ordenarLista() {
-//        list.sort(String::compareTo);
-//        System.out.println("Lista ordenada com sucesso.");
-//    }
+
+    private static void ordenarLista() {
+        list.sort();
+        exibirLista();
+    }
 }
