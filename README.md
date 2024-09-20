@@ -4,13 +4,13 @@ Este projeto representa uma Biblioteca de livros que utiliza uma Lista Sequencia
 
 ## Considerações
 
-Foi escolhido o `Array List` devido a sua implementação ser a mais simples e possuir acesso rápido á items em qualquer posição.
-Foi escolhido o `Quick Sort` pois possui uma melhor performance que o Bubble Sort e possui uma implementação mais desafiadora >:).
+- Foi escolhido o `Array List` devido a sua implementação ser a mais simples e possuir acesso rápido á items em qualquer posição.
+- Foi escolhido o `Quick Sort` pois possui uma melhor performance que o Bubble Sort e possui uma implementação mais desafiadora >:).
 
 ## Estrutura do Projeto
 
-A implementação das listas, encontra-se em `src/atal/list`;
-A aplicação Main encontra-se em `src/atal/app1/MenuController.class`;
+- A implementação das listas, encontra-se em `src/atal/list`;
+- A aplicação Main encontra-se em `src/atal/app1/MenuController.class`;
 
 ## Funcionalidades
 
