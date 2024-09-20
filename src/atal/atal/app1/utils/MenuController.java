@@ -4,10 +4,10 @@ import java.util.Scanner;
 
 import atal.app1.models.EBook;
 import atal.app1.models.SortBy;
-import atal.list.ListaSequencial;
+import atal.list.ArrayListWithQuickSort;
 
 public class MenuController {
-	private static ListaSequencial list = new ListaSequencial();
+	private static ArrayListWithQuickSort list = new ArrayListWithQuickSort();
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -16,11 +16,12 @@ public class MenuController {
         do {
             System.out.println("\n##### Entrega Fase 1 #####");
             System.out.println("##### Menu - Biblioteca #####");
-            System.out.println("1. Adicionar Livro");
+            System.out.println("1. Criar Livro");
             System.out.println("2. Buscar Livro");
-            System.out.println("3. Remover Livro");
-            System.out.println("4. Ordenar Livros");
-            System.out.println("5. Todos os Livros");
+            System.out.println("3. Atualizar Livro");
+            System.out.println("4. Remover Livro");
+            System.out.println("5. Ordenar Livros");
+            System.out.println("6. Todos os Livros");
             System.out.println("\n00. Sair");
             System.out.print("Escolha uma opção: ");
             
@@ -29,22 +30,21 @@ public class MenuController {
 
             switch (opcao) {
                 case 1:
-                    adicionarElemento(scanner);
+                	adicionarLivros(scanner);
                     break;
                 case 2:
-                    obterElemento(scanner);
-                    break;
+                	obterLivro(scanner);
                 case 3:
-                    removerElemento(scanner);
+                    editarLivro(scanner);
                     break;
                 case 4:
-                    ordenarLista(scanner);
+                    removerLivro(scanner);
                     break;
                 case 5:
-                    exibirLista();
+                    ordenarLista(scanner);
                     break;
                 case 6:
-                    System.out.println("Saindo...");
+                    exibirLista();
                     break;
                 default:
                     System.out.println("Opção inválida. Tente novamente.");
@@ -54,7 +54,7 @@ public class MenuController {
         scanner.close();
     }
 
-    private static void adicionarElemento(Scanner scanner) {
+    private static void adicionarLivros(Scanner scanner) {
         String opcao;
         
         do {
@@ -67,7 +67,7 @@ public class MenuController {
         	
         } else {
             String id, title, author, publishDate;
-            System.out.println("\nDigite os elementos a serem adicionados (Digite '00' para sair):");
+            System.out.println("\nAdicione os novos Livros (Digite '00' para sair):");
 
             do {
                 System.out.print("\nID do livro: ");
@@ -96,7 +96,49 @@ public class MenuController {
                 }
             } while (!id.equals("00"));
         }
-        System.out.println("Fim da adição de elementos.");	
+        System.out.println("Fim da adição de livros.");	
+    }
+    
+    private static void editarLivro(Scanner scanner) {
+    	System.out.print("\nDigite o índice do Livro (0 a " + (list.size() - 1) + "): ");
+    	int index = Integer.valueOf(scanner.nextLine());
+        
+    	if (index >= 0 && index < list.size()) {
+    		EBook selecionado = list.get(index); 
+    		exibirLivro(selecionado);
+    		
+    		String id, title, author, publishDate;
+            System.out.println("\nAdicione o novo Livro (Digite '00' para sair):");
+
+            System.out.print("\nID do livro: ");
+            scanner.reset();
+            id = scanner.nextLine();
+
+            if (!id.equals("00")) {
+                System.out.print("Título: ");
+                title = scanner.nextLine();
+
+                System.out.print("Autor: ");
+                author = scanner.nextLine();
+
+                System.out.print("Ano de publicação: ");
+                publishDate = scanner.nextLine();
+
+                try {
+                    Integer bookID = Integer.valueOf(id);
+                    Integer year = Integer.valueOf(publishDate);
+
+                    EBook livro = new EBook(bookID, title, author, year);
+                    list.set(index, livro);
+             
+                } catch (NumberFormatException e) {
+                    System.out.println("Entrada inválida. Por favor, insira números válidos para ID e ano de publicação.");
+                }
+            }
+        
+        } else {
+            System.out.println("Índice inválido.");
+        }
     }
     
     private static void carregarLivros() {
@@ -111,12 +153,21 @@ public class MenuController {
         list.add(new EBook(2, "Brave New World", "Aldous Huxley", 1932));
         list.add(new EBook(5, "The Odyssey", "Homer", -800));
     }
+    
+    private static void exibirLivro(EBook book) {
+    	System.out.println("\nLivro: " + book.getTitle());
+		System.out.println("Author: " + book.getAuthor());
+		System.out.println("Publicacao: " + book.getPublishDate());
+		System.out.println("ID: " + book.getId());
+		System.out.println();
+    }
 
-    private static void obterElemento(Scanner scanner) {
-        System.out.print("\nDigite o índice do elemento (0 a " + (list.size() - 1) + "): ");
+    private static void obterLivro(Scanner scanner) {
+        System.out.print("\nDigite o índice do Livro (0 a " + (list.size() - 1) + "): ");
         int index = scanner.nextInt();
         if (index >= 0 && index < list.size()) {
-            System.out.println("Elemento no índice " + index + ": " + list.get(index));
+        	EBook book = list.get(index);
+        	exibirLivro(book);
         } else {
             System.out.println("Índice inválido.");
         }
@@ -126,21 +177,16 @@ public class MenuController {
         if (list.isEmpty()) {
             System.out.println("\nA lista está vazia.");
         } else {
-            System.out.println("\nElementos da lista:");
+            System.out.println("\nLivros da Biblioteca:");
             for (int i = 0; i < list.size(); i++) {
     			EBook book = list.get(i);
-
-    			System.out.println("\nLivro: " + book.getTitle());
-    			System.out.println("Author: " + book.getAuthor());
-    			System.out.println("Publicacao: " + book.getPublishDate());
-    			System.out.println("ID: " + book.getId());
-    			System.out.println();
+    			exibirLivro(book);
     		}
         }
     }
 
-    private static void removerElemento(Scanner scanner) {
-        System.out.print("\nDigite o índice do elemento a ser removido (0 a " + (list.size() - 1) + "): ");
+    private static void removerLivro(Scanner scanner) {
+        System.out.print("\nDigite o índice do Livro (0 a " + (list.size() - 1) + "): ");
         int index = scanner.nextInt();
         if (index >= 0 && index < list.size()) {
             list.remove(index);
@@ -152,12 +198,12 @@ public class MenuController {
     private static void ordenarLista(Scanner scanner) {
         String opcao;
 
-        System.out.println("\nEscolha a propriedade para ordenar a lista:");
+        System.out.println("\nComo desejar ordenar os Livros?");
         System.out.println("1. ID");
         System.out.println("2. Título");
         System.out.println("3. Autor");
         System.out.println("4. Ano de Publicação");
-        System.out.print("Digite o número correspondente à sua escolha: ");
+        System.out.print("Digite o número desejado: ");
         opcao = scanner.nextLine();
 
         switch (opcao) {
