@@ -67,17 +67,19 @@ public class ListaSequencial {
 		int rigthIndex = inserted - 1;
 
 		if (inserted > 1) {
-			quickSortPartioning(list, leftIndex, rigthIndex);
+			quickSortPartitioning(list, leftIndex, rigthIndex);
 		}	
 	}
 	
-	private void quickSortPartioning(EBook[] items, int leftIndex, int rigthIndex) {
+	private void quickSortPartitioning(EBook[] items, int leftIndex, int rigthIndex) {
 		if (leftIndex >= rigthIndex) {
 			return;
 		}
 		
-		int i = leftIndex - 1,
-			j = rigthIndex + 1,
+		System.out.println(toString());
+		
+		int i = leftIndex,
+			j = rigthIndex,
 			pivotIndex = 0;
 		
 		Integer nextPivotIndex = null;
@@ -85,26 +87,29 @@ public class ListaSequencial {
 		EBook pivot = list[pivotIndex];
 		
 		while (nextPivotIndex == null) {
-			do {
+			while(items[i].getPublishDate() < pivot.getPublishDate()) {
 				i++;
-			} while(items[i].getPublishDate() < pivot.getPublishDate());
+			}
 			
-			do {
+			while(items[j].getPublishDate() > pivot.getPublishDate()) {
 				j--;
-			} while(items[j].getPublishDate() > pivot.getPublishDate());
+			}
 			
 			if (i >= j) {
 				nextPivotIndex = j;
 			} else {
-				EBook aux = list[i];
-				list[i] = list[j];
-				list[j] = aux;
+				EBook aux = items[i];
+				items[i] = items[j];
+				items[j] = aux;
+				i++;
+				j--;
 			}
 			
 		}
 		
-		quickSortPartioning(list, leftIndex, nextPivotIndex);
-		quickSortPartioning(list, nextPivotIndex + 1, rigthIndex);
+		
+		quickSortPartitioning(items, leftIndex, nextPivotIndex);
+		quickSortPartitioning(items, nextPivotIndex + 1, rigthIndex);	
 	}
 	
 	private void moveArrayItems(int initialIndex) {
@@ -138,5 +143,23 @@ public class ListaSequencial {
 	
 	private EBook[] createArray(int size) {
 		return new EBook[size];
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("[ ");
+		
+		books:
+		for (EBook book : list) {
+			if (book == null) {
+				break books;
+			} else {
+				sb.append(book.getPublishDate());
+				sb.append(" ");
+			}
+		}
+		sb.append("]");
+		return sb.toString();
 	}
 }

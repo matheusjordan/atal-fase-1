@@ -5,7 +5,7 @@ import java.util.Scanner;
 import atal.app1.models.EBook;
 import atal.list.ListaSequencial;
 
-public class OptionsMenu {
+public class MenuController {
 	private static ListaSequencial list = new ListaSequencial();
 
     public static void main(String[] args) {
@@ -86,9 +86,7 @@ public class OptionsMenu {
             System.out.println("\nA lista está vazia.");
         } else {
             System.out.println("\nElementos da lista:");
-            for (int i = 0; i < list.size(); i++) {
-                System.out.println(i + ": " + list.get(i).getPublishDate());
-            }
+            System.out.println(list.toString());
         }
     }
 
