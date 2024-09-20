@@ -17,9 +17,9 @@ Este projeto representa uma Biblioteca de livros que utiliza uma Lista Sequencia
 ### 1. Biblioteca (ARRAY LIST)
 
 Implementa todas as operações básicas de uma Lista Sequencial:
-- Criar
-- Ler
-- Atualizar
+- Adicionar
+- Buscar Livro
+- Atualizar 
 - Remover
 - Listar
 - Ordernar
