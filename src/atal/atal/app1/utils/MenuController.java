@@ -3,6 +3,7 @@ package atal.app1.utils;
 import java.util.Scanner;
 
 import atal.app1.models.EBook;
+import atal.app1.models.SortBy;
 import atal.list.ListaSequencial;
 
 public class MenuController {
@@ -37,7 +38,7 @@ public class MenuController {
                     removerElemento(scanner);
                     break;
                 case 4:
-                    ordenarLista();
+                    ordenarLista(scanner);
                     break;
                 case 5:
                     exibirLista();
@@ -47,28 +48,68 @@ public class MenuController {
                     break;
                 default:
                     System.out.println("Opção inválida. Tente novamente.");
-            }
+            }	
         } while (opcao != 00);
 
         scanner.close();
     }
 
     private static void adicionarElemento(Scanner scanner) {
-        String elemento;
-        System.out.println("\nDigite os elementos a serem adicionados (Digite '00' para sair):");
+        String opcao;
         
         do {
-            System.out.print("Elemento: ");
-            elemento = scanner.nextLine();
-            
-            if (!elemento.equals("00")) {
-            	Integer bookID = Integer.valueOf(elemento);
-            	EBook livro = new EBook(bookID, "", "", bookID);
-                list.add(livro);
-            }
-        } while (!elemento.equals("00"));
+            System.out.println("\nCarregar livros do cache? (Digite '1' para confirmar e '0' para sair):");
+        	opcao = scanner.nextLine();
+        } while(!opcao.equals("1") && !opcao.equals("0"));
         
-        System.out.println("Fim da adição de elementos.");
+        if (opcao.equals("1")) {
+        	carregarLivros();
+        	
+        } else {
+            String id, title, author, publishDate;
+            System.out.println("\nDigite os elementos a serem adicionados (Digite '00' para sair):");
+
+            do {
+                System.out.print("\nID do livro: ");
+                id = scanner.nextLine();
+
+                if (!id.equals("00")) {
+                    System.out.print("Título: ");
+                    title = scanner.nextLine();
+
+                    System.out.print("Autor: ");
+                    author = scanner.nextLine();
+
+                    System.out.print("Ano de publicação: ");
+                    publishDate = scanner.nextLine();
+
+                    try {
+                        Integer bookID = Integer.valueOf(id);
+                        Integer year = Integer.valueOf(publishDate);
+
+                        EBook livro = new EBook(bookID, title, author, year);
+                        list.add(livro);
+                 
+                    } catch (NumberFormatException e) {
+                        System.out.println("Entrada inválida. Por favor, insira números válidos para ID e ano de publicação.");
+                    }
+                }
+            } while (!id.equals("00"));
+        }
+        System.out.println("Fim da adição de elementos.");	
+    }
+    
+    private static void carregarLivros() {
+    	list.add(new EBook(1, "1984", "George Orwell", 1949));
+        list.add(new EBook(9, "To Kill a Mockingbird", "Harper Lee", 1960));
+        list.add(new EBook(7, "The Great Gatsby", "F. Scott Fitzgerald", 1925));
+        list.add(new EBook(4, "Moby Dick", "Herman Melville", 1851));
+        list.add(new EBook(10, "War and Peace", "Leo Tolstoy", 1869));
+        list.add(new EBook(6, "Pride and Prejudice", "Jane Austen", 1813));
+        list.add(new EBook(3, "The Catcher in the Rye", "J.D. Salinger", 1951));
+        list.add(new EBook(8, "The Hobbit", "J.R.R. Tolkien", 1937));
+        list.add(new EBook(2, "Brave New World", "Aldous Huxley", 1932));
+        list.add(new EBook(5, "The Odyssey", "Homer", -800));
     }
 
     private static void obterElemento(Scanner scanner) {
@@ -99,9 +140,35 @@ public class MenuController {
             System.out.println("Índice inválido.");
         }
     }
+    
+    private static void ordenarLista(Scanner scanner) {
+        String opcao;
 
-    private static void ordenarLista() {
-        list.sort();
+        System.out.println("\nEscolha a propriedade para ordenar a lista:");
+        System.out.println("1. ID");
+        System.out.println("2. Título");
+        System.out.println("3. Autor");
+        System.out.println("4. Ano de Publicação");
+        System.out.print("Digite o número correspondente à sua escolha: ");
+        opcao = scanner.nextLine();
+
+        switch (opcao) {
+            case "1": 
+                list.sort(SortBy.ID);
+                break;
+            case "2":
+                list.sort(SortBy.TITLE);
+                break;
+            case "3":
+                list.sort(SortBy.AUTHOR);
+                break;
+            case "4":
+                list.sort(SortBy.PUBLISH_DATE);
+                break;
+            default:
+                System.out.println("Opção inválida. A lista não será ordenada.");
+                return;
+        }
         exibirLista();
     }
 }

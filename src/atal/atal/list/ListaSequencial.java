@@ -59,19 +59,23 @@ public class ListaSequencial {
 	}
 	
 	public void sort() {
-		quickSort();
+		quickSort(SortBy.PUBLISH_DATE);
 	}
 	
-	private void quickSort() {
+	public void sort(SortBy property) {
+		quickSort(property);
+	}
+	
+	private void quickSort(SortBy property) {
 		int leftIndex = 0;
 		int rigthIndex = inserted - 1;
 
 		if (inserted > 1) {
-			quickSortPartitioning(list, leftIndex, rigthIndex);
+			quickSortPartitioning(list, leftIndex, rigthIndex, property);
 		}	
 	}
 	
-	private void quickSortPartitioning(EBook[] items, int leftIndex, int rigthIndex) {
+	private void quickSortPartitioning(EBook[] items, int leftIndex, int rigthIndex, SortBy property) {
 		if (leftIndex >= rigthIndex) {
 			return;
 		}
@@ -87,11 +91,37 @@ public class ListaSequencial {
 		EBook pivot = list[pivotIndex];
 		
 		while (nextPivotIndex == null) {
-			while(items[i].getPublishDate() < pivot.getPublishDate()) {
+			boolean lowerThanPivot = false;
+			boolean biggerThanPivot = false;
+
+			switch (property) {
+	        case SortBy.ID: 
+	        	lowerThanPivot = items[i].getId() < pivot.getId();
+	        	biggerThanPivot = items[j].getId() > pivot.getId();
+
+	        	break;
+	        case SortBy.TITLE:
+	        	lowerThanPivot = items[i].getTitle().compareToIgnoreCase(pivot.getTitle()) < 0;
+	        	biggerThanPivot = items[j].getTitle().compareToIgnoreCase(pivot.getTitle()) > 0;
+	        	
+	            break;
+	        case SortBy.AUTHOR:
+	        	lowerThanPivot = items[i].getAuthor().compareToIgnoreCase(pivot.getAuthor()) < 0;
+	        	biggerThanPivot = items[j].getAuthor().compareToIgnoreCase(pivot.getAuthor()) > 0;
+	        	
+	            break;
+	        case SortBy.PUBLISH_DATE:
+	        	lowerThanPivot = items[i].getPublishDate() < pivot.getPublishDate();
+	        	biggerThanPivot = items[j].getPublishDate() > pivot.getPublishDate();
+
+	            break;
+			}
+			
+			while(lowerThanPivot) {
 				i++;
 			}
 			
-			while(items[j].getPublishDate() > pivot.getPublishDate()) {
+			while(biggerThanPivot) {
 				j--;
 			}
 			
@@ -108,8 +138,8 @@ public class ListaSequencial {
 		}
 		
 		
-		quickSortPartitioning(items, leftIndex, nextPivotIndex);
-		quickSortPartitioning(items, nextPivotIndex + 1, rigthIndex);	
+		quickSortPartitioning(items, leftIndex, nextPivotIndex, property);
+		quickSortPartitioning(items, nextPivotIndex + 1, rigthIndex, property);	
 	}
 	
 	private void moveArrayItems(int initialIndex) {
