@@ -72,7 +72,7 @@ public class ListaSequencial {
 	}
 	
 	private void quickSortPartioning(EBook[] items, int leftIndex, int rigthIndex) {
-		if (leftIndex < rigthIndex) {
+		if (leftIndex >= rigthIndex) {
 			return;
 		}
 		
@@ -98,13 +98,13 @@ public class ListaSequencial {
 			} else {
 				EBook aux = list[i];
 				list[i] = list[j];
-				list[j] = aux;	
+				list[j] = aux;
 			}
 			
 		}
 		
-		quickSortPartioning(list, leftIndex, pivotIndex);
-		quickSortPartioning(list, pivotIndex + 1, rigthIndex);
+		quickSortPartioning(list, leftIndex, nextPivotIndex);
+		quickSortPartioning(list, nextPivotIndex + 1, rigthIndex);
 	}
 	
 	private void moveArrayItems(int initialIndex) {
