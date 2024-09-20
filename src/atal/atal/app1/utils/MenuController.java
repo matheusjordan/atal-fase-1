@@ -127,7 +127,15 @@ public class MenuController {
             System.out.println("\nA lista está vazia.");
         } else {
             System.out.println("\nElementos da lista:");
-            System.out.println(list.toString());
+            for (int i = 0; i < list.size(); i++) {
+    			EBook book = list.get(i);
+
+    			System.out.println("\nLivro: " + book.getTitle());
+    			System.out.println("Author: " + book.getAuthor());
+    			System.out.println("Publicacao: " + book.getPublishDate());
+    			System.out.println("ID: " + book.getId());
+    			System.out.println();
+    		}
         }
     }
 

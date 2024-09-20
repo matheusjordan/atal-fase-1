@@ -46,14 +46,6 @@ public class ListaSequencial {
 		return inserted;
 	}
 	
-	public void showItems() {
-		for (int i = 0; i < inserted; i++) {
-			System.out.println(list[i]);
-		}
-		
-		System.out.println();
-	}
-	
 	public boolean isEmpty() {
 		return inserted == 0;
 	}
