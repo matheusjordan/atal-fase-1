@@ -22,8 +22,9 @@ public class MenuController {
             System.out.println("4. Remover Livro");
             System.out.println("5. Ordenar Livros");
             System.out.println("6. Todos os Livros");
-            System.out.println("\n00. Sair");
+            System.out.println("\n0. Sair");
             System.out.print("Escolha uma opção: ");
+            
             
             opcao = scanner.nextInt();
             scanner.nextLine();
@@ -46,10 +47,12 @@ public class MenuController {
                 case 6:
                     exibirLista();
                     break;
+                case 0:
+                	break;
                 default:
                     System.out.println("Opção inválida. Tente novamente.");
             }	
-        } while (opcao != 00);
+        } while (opcao != 0);
 
         scanner.close();
     }
