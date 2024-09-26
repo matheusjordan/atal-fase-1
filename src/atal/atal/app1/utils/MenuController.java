@@ -35,6 +35,7 @@ public class MenuController {
                     break;
                 case 2:
                 	obterLivro(scanner);
+                	break;
                 case 3:
                     editarLivro(scanner);
                     break;

@@ -169,7 +169,6 @@ public class ArrayListWithQuickSort {
 		list[nextIndex] = null;
 	}
 	
-	
 	private void resizeArray() {
 		EBook[] newList = createArray(list.length * INCREASE_FACTOR);
 		
